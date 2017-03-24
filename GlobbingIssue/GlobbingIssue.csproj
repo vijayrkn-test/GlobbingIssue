@@ -1,9 +1,32 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <CompileFile Include="../ClassLibrary1/NewFile.cs"></CompileFile>
+    <ContentFile Include="../ClassLibrary1/GeneratedPage.html"></ContentFile>
+    <DuplicateCompileFile Include="Program2.cs"></DuplicateCompileFile>
+    <DuplicateContentFile Include="wwwroot/MainPage2.html"></DuplicateContentFile>
+  </ItemGroup>
+
+  <Target Name="GenerateCompileFilesBeforeBuild" BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="@(CompileFile)" DestinationFolder="$(MSBuildProjectDirectory)" />
+  </Target>
+
+  <Target Name="RemoveCompileFilesBeforeBuild" BeforeTargets="BeforeBuild">
+    <Delete Files="@(DuplicateCompileFile)" />
+  </Target>
+
+  <Target Name="GenerateContentFilesBeforePublish" BeforeTargets="BeforePublish">
+    <Copy SourceFiles="@(ContentFile)" DestinationFolder="$(MSBuildProjectDirectory)\wwwroot" />
+  </Target>
+
+  <Target Name="RemoveContentFilesBeforePublish" BeforeTargets="BeforePublish">
+    <Delete Files="@(DuplicateContentFile)" />
+  </Target>
+  
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>

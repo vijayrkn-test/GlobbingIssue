@@ -20,6 +20,8 @@ namespace GlobbingIssue
                 .Build();
 
             host.Run();
+
+            new NewFile();
         }
     }
 }
