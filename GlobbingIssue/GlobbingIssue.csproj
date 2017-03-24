@@ -8,7 +8,7 @@
     <CompileFile Include="../ClassLibrary1/NewFile.cs"></CompileFile>
     <ContentFile Include="../ClassLibrary1/GeneratedPage.html"></ContentFile>
     <DuplicateCompileFile Include="Program2.cs"></DuplicateCompileFile>
-    <DuplicateContentFile Include="wwwroot/MainPage2.html"></DuplicateContentFile>
+    <DuplicateContentFile Include="wwwroot\MainPage2.html"></DuplicateContentFile>
   </ItemGroup>
 
   <Target Name="GenerateCompileFilesBeforeBuild" BeforeTargets="BeforeBuild">
@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\MainPage2.html" />
   </ItemGroup>
 
 </Project>
