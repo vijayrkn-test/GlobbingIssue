@@ -6,25 +6,46 @@
 
   <ItemGroup>
     <CompileFile Include="../ClassLibrary1/NewFile.cs"></CompileFile>
-    <ContentFile Include="../ClassLibrary1/GeneratedPage.html"></ContentFile>
+    <SourceContentFile Include="../ClassLibrary1/GeneratedPage.html"></SourceContentFile>
+    <DestinationContentFile Include="wwwroot/GeneratedPage.html"></DestinationContentFile>
+    
     <DuplicateCompileFile Include="Program2.cs"></DuplicateCompileFile>
-    <DuplicateContentFile Include="wwwroot\MainPage2.html"></DuplicateContentFile>
+    <DuplicateContentFile Include="wwwroot/MainPage2.html"></DuplicateContentFile>
   </ItemGroup>
 
   <Target Name="GenerateCompileFilesBeforeBuild" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="@(CompileFile)" DestinationFolder="$(MSBuildProjectDirectory)" />
+    
+    <!-- Work-around -->
+    <!--<ItemGroup>
+      <Compile Include="@(CompileFile)" />
+    </ItemGroup>-->
   </Target>
 
   <Target Name="RemoveCompileFilesBeforeBuild" BeforeTargets="BeforeBuild">
     <Delete Files="@(DuplicateCompileFile)" />
+    <!-- Work-around -->
+    <!--<ItemGroup>
+      <Compile Remove="@(DuplicateCompileFile)" />
+    </ItemGroup>-->
   </Target>
 
   <Target Name="GenerateContentFilesBeforePublish" BeforeTargets="BeforePublish">
-    <Copy SourceFiles="@(ContentFile)" DestinationFolder="$(MSBuildProjectDirectory)\wwwroot" />
+    <Copy SourceFiles="@(SourceContentFile)" DestinationFiles="@(DestinationContentFile)" />
+    <!-- Work-around -->
+    <!--<ItemGroup>
+      <Content Include="@(DestinationContentFile)" CopyToPublishDirectory="Always" />
+      <ContentWithTargetPath Include="@(DestinationContentFile)" TargetPath="%(Identity)" CopyToPublishDirectory="Always" />
+    </ItemGroup>-->
   </Target>
 
   <Target Name="RemoveContentFilesBeforePublish" BeforeTargets="BeforePublish">
     <Delete Files="@(DuplicateContentFile)" />
+    <!-- Work-around -->
+    <!--<ItemGroup>
+      <Content Remove="@(DuplicateContentFile)" />
+      <ContentWithTargetPath Remove="@(DuplicateContentFile)" />
+    </ItemGroup>-->
   </Target>
   
   <PropertyGroup>
@@ -41,8 +62,4 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\MainPage2.html" />
-  </ItemGroup>
-
 </Project>
